@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drone</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+
+    <style>
+        /* Стилі для гарного вигляду */
+        .table-container { width: 100%; overflow-x: auto; margin-bottom: 20px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; position: sticky; top: 0; }
+
+        /* Стилі для кнопок пагінації */
+        .pagination { display: flex; gap: 5px; margin-top: 10px; }
+        .page-btn { padding: 8px 12px; cursor: pointer; border: 1px solid #ccc; background: white; }
+        .page-btn.active { background-color: #007bff; color: white; border-color: #007bff; }
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <nav class="menu">
+
+        <div>
+            <img src="{{ url_for('static', filename='img/logo.png') }}" alt="Logo demchenko-livandovska" width="50px"
+                 style="margin-left: 10px;">
+        </div>
+
+        <div>
+            <ul class="first_ul">
+                <li class="first_li"><a class="first_a" href="#Dowland">Завантаження</a></li>
+                <li class="first_li"><a class="first_a" href="#Form">Форма</a></li>
+                <li class="first_li"><a class="first_a" href="#End">Результат розрахунків</a></li>
+            </ul>
+        </div>
+
+    </nav>
+
+</header>
+
+<section class="navigation_on_foto">
+
+    <h1>Доставка дронами</h1>
+
+</section>
+
+<main class="content-wrapper">
+
+    <div class="upload-container">
+
+        <a name="Dowland"></a>
+
+        <h1 style="font-size: 34px; margin-bottom: 20px; text-shadow: 2px 2px 10px #da7762">Завантаження даних</h1>
+
+        <p>Виберіть ваш CSV-файл для завантаження в базу SQLite:</p>
+
+        <form action="/upload" method="POST" enctype="multipart/form-data">
+
+            <div id="drop-zone" class="drop-zone">
+
+                <span class="drop-zone__prompt">
+                    💾 Перетягніть CSV-файл сюди<br>або натисніть для вибору
+                </span>
+
+                <span id="file-name-display" class="drop-zone__file-name">Назва файлу</span>
+
+                <input type="file" name="file" accept=".csv" id="file-input" hidden>
+
+            </div>
+
+            <button type="submit">Завантажити дані в SQL</button>
+
+        </form>
+
+    </div>
+
+    <script>
+
+        const dropZone = document.getElementById('drop-zone');
+        const fileInput = document.getElementById('file-input');
+        const prompt = document.querySelector('.drop-zone__prompt');
+        const fileNameDisplay = document.getElementById('file-name-display');
+
+        // Відкриваємо вибір файлу при натисканні на зону
+        dropZone.addEventListener('click', () => fileInput.click());
+
+        // Оновлюємо відображення, коли файл вибрано через діалог
+        fileInput.addEventListener('change', (e) => {
+            if (fileInput.files.length) {
+                updateFileNameDisplay(fileInput.files[0].name);
+            }
+        });
+
+        // Основні події Drag & Drop
+
+        // 1. Файл над зоною
+        dropZone.addEventListener('dragover', (e) => {
+            e.preventDefault(); // Обов'язково! Забороняє браузеру відкривати файл
+            dropZone.classList.add('drag-over');
+        });
+
+        // 2. Файл вийшов із зони
+        ['dragleave', 'dragend'].forEach(type => {
+            dropZone.addEventListener(type, () => {
+                dropZone.classList.remove('drag-over');
+            });
+        });
+
+        // 3. Файл "впав" у зону
+        dropZone.addEventListener('drop', (e) => {
+            e.preventDefault(); // Забороняє стандартну дію
+            dropZone.classList.remove('drag-over');
+
+            if (e.dataTransfer.files.length) {
+                const file = e.dataTransfer.files[0];
+
+                // Додаткова перевірка в JavaScript (чи це CSV)
+                if (file.name.endsWith('.csv')) {
+                    fileInput.files = e.dataTransfer.files; // Передаємо файл у схований input
+                    updateFileNameDisplay(file.name);
+                } else {
+                    alert("Будь ласка, завантажте лише CSV-файл.");
+                }
+            }
+        });
+
+        // Функція для красивого відображення назви файлу
+        function updateFileNameDisplay(fileName) {
+            prompt.style.opacity = '0'; // Приховуємо початковий текст
+
+            setTimeout(() => {
+                prompt.style.display = 'none';
+                fileNameDisplay.textContent = '📄 ' + fileName; // Додаємо іконку
+                fileNameDisplay.style.display = 'block';
+                setTimeout(() => {
+                    fileNameDisplay.style.opacity = '1';
+                }, 10);
+            }, 300); // Час анімації зникнення
+        }
+
+    </script>
+
+    <div class="upload-container">
+
+        <a name="Form"></a>
+        <h2 style="font-size: 34px; margin-bottom: 20px; text-shadow: 2px 2px 10px #da7762">Заповні форму </h2>
+
+        <form action="/submit_form" method="POST">
+
+            <div class="form-group">
+                <label for="longitude">Довгота:</label>
+                <input type="text" id="longitude" name="longitude" required placeholder="Введіть довготу">
+            </div>
+
+            <div class="form-group">
+                <label for="width">Ширина:</label>
+                <input type="text" id="width" name="width" required placeholder="Введіть ширину">
+            </div>
+
+            <div class="form-group">
+                <label for="sum">Сума:</label>
+                <input type="text" id="sum" name="sum" required placeholder="Введіть суму">
+            </div>
+            <button type="submit">Відправити</button>
+
+        </form>
+
+    </div>
+
+    <div class="table_csv">
+
+        <a name="End"></a>
+        {{ table | safe if table }}
+    </div>
+
+    <div class="table_csv">
+        <h3>Історія ручних запитів</h3>
+        {{ history_table | safe if history_table }}
+    </div>
+
+</main>
+
+<footer class="main-footer">
+    <br>
+    <h2 style="color: white; text-align: center;">Ми студентки Вінницького національного технічного університету</h2>
+    <div style="display: flex; justify-content: center;">
+        <p style="margin-left: 20px; margin-right: 20px; color: white; ">
+            Створена робота була розроблена для участі у хакатоні.
+        </p>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+
+<script>
+
+    $(document).ready(function() {
+
+        var table = $('table');
+
+        if (table.length > 0) {
+            table.attr('id', 'resultTable');
+            table.addClass('display');
+
+            $('#resultTable').DataTable({
+                "pageLength": 10,
+                "scrollX": true,
+                "language": {
+                    "url": "https://cdn.datatables.net"
+                }
+            });
+            console.log("Пагінація активована успішно!");
+        }
+    });
+</script>
+
+</body>
+
+</html>

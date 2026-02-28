@@ -1,0 +1,2 @@
+id,ReportingCode,State,TaxRegionName,subtotal,StateRate,state_tax_amount,EstimatedCountyRate,county_tax_amount,EstimatedCityRate,city_tax_amount,EstimatedSpecialRate,especial_tax_amount,EstimatedCombinedRate,tax_amount,total_amount
+1,,NY,SOUTH VALLEY,500.0,0.04,20.0,0.04,20.0,0.0,0.0,0.0,0.0,0.08,40.0,540.0

@@ -1,0 +1,276 @@
+body{
+    font-family: sans-serif;
+    background-color: #797878;
+    padding: 0;
+    margin: 0;
+}
+
+.menu {
+    top: 0;
+    background-color:#020d02;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.first_ul {
+  list-style-type: none;
+}
+
+.first_li {
+  display: inline-block;
+}
+
+.first_a {
+  text-decoration: none;
+  display: block;
+  padding: 5px 15px 5px 15px;
+  margin-right: 15px;
+  text-align: center;
+  border-radius: 20px;
+  color: #ffffff;
+}
+
+.first_a:hover {
+  background-color: #da7762;
+}
+
+.navigation_on_foto {
+    background: linear-gradient(rgba(18, 18, 19, 1), rgba(0, 0, 0, 0.6)),
+                url("img/images.jpg");
+     height: 600px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 2px 2px 10px #da7762;
+    font-size: 52px;
+}
+
+
+.drop-zone {
+    width: 300px;
+    height: 200px;
+    border: 2px dashed #da7762; /*  колір тіні */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.drop-zone.drag-over {
+    background: #1a1a1a; /* Зміна кольору, коли ми тримаємо файл над зоною */
+    border-color: #ffffff;
+}
+
+.content-wrapper {
+    display: flex;
+    flex-direction: column; /* Вказуємо, що елементи мають йти один під одним */
+    align-items: center;    /* Центруємо обидва блоки по горизонталі */
+    gap: 30px;              /* Додаємо відстань між блоками автоматично */
+    padding: 20px;          /* Трохи простору по краях */
+    min-height: 100vh;      /* Щоб розтягнути простір на весь екран */
+}
+
+.upload-container {
+    background-color: #5d4747; /* Трохи світліший темний фон */
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    width: 90%;
+    max-width: 1500px;
+}
+
+
+.drop-zone {
+    width: 100%;
+    height: 200px;
+    border: 2px dashed #da7762; /* пунктир */
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer; /*курсор-рука*/
+    transition: all 0.3s ease; /*зміна кольорів плавно при наведенні*/
+    margin-bottom: 20px;
+    position: relative;
+}
+
+/* Ефект при перетягуванні файлу над зоною */
+.drop-zone.drag-over {
+    border-color: #7db3e9;
+    background-color: rgba(139, 179, 218, 0.1);
+}
+
+.drop-zone__prompt {
+    color: #8bb3da;
+    font-size: 16px;
+    text-align: center;
+    padding: 20px;
+    transition: opacity 0.3s ease;
+}
+
+.drop-zone__file-name {
+    font-size: 18px;
+    color: white;
+    font-weight: bold;
+    display: none; /* Приховано за замовчуванням */
+}
+
+button[type="submit"] {
+    background: linear-gradient(#692b0c, #000000cc); /* градієнт */
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 10px; /*заокруглення кутів*/
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-shadow: 1px 1px 5px #8bb3da; /*текст підсвічується*/
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /*тінь під кнопкою*/
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-2px); /*кнопка піднімається трохи вгору при наведенні*/
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+
+button[type="submit"]:active {
+    transform: translateY(1px);
+}
+
+
+/* Стиль для групи */
+.form-group {
+    margin-bottom: 20px;
+    text-align: left; /* Вирівнюємо назви полів зліва */
+}
+
+/* Назви полів */
+label {
+    display: block;
+    color: #8bb3da; /* Колір для тексту */
+    margin-bottom: 8px;
+    font-weight: bold;
+}
+
+/* Поля вводу */
+input[type="text"], input[type="email"] {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a1a1a; /* Темний фон інпуту */
+    border: 1px solid #444;
+    border-radius: 8px;
+    color: white;
+    box-sizing: border-box; /* Важливо, щоб padding не ламав ширину */
+    transition: border-color 0.3s;
+}
+
+input:focus {
+    outline: none;
+    border-color: #da7762;
+}
+
+
+.main-footer {
+    background-color: rgb(0, 0, 0);
+    height: 150px;
+}
+
+.table_csv {
+    width: 90%;
+    margin: 40px auto;
+    overflow-x: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+table.dataTable {
+    width: 80% !important;
+    margin: 0 auto;
+    font-size: 10px;
+}
+
+.dataTables_wrapper .dataTables_length,
+.dataTables_wrapper .dataTables_filter {
+    float: none !important;
+    text-align: center !important;
+    display: block;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.dataTables_wrapper .dataTables_length label,
+.dataTables_wrapper .dataTables_filter label {
+    color: #da7762 !important;
+    font-family: 'Montserrat', sans-serif !important;
+    font-weight: 600 !important;
+    font-size: 16px;
+}
+
+.dataTables_filter input,
+.dataTables_length select {
+    border: 2px solid #7ba2cc !important;
+    border-radius: 8px !important;
+    padding: 6px !important;
+    margin-left: 10px !important;
+    color: #444 !important;
+    outline: none;
+}
+
+.dataTables_wrapper .dataTables_info,
+.dataTables_wrapper .dataTables_paginate {
+    float: none !important;
+    text-align: center !important;
+    margin: 20px 0 !important;
+    width: 100%;
+    color: #da7762 !important; /* Колір для тексту інфо */
+    font-family: 'Montserrat', sans-serif;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 8px 16px !important;
+    margin: 0 4px !important;
+    border-radius: 8px !important;
+    background: #f0f0f0 !important; /* Світло-сірий фон для неактивних */
+    border: 1px solid #ddd !important;
+    color: #333 !important;
+    transition: all 0.3s ease;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: #7ba2cc !important;
+    color: white !important;
+    border: 1px solid #7ba2cc !important;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: #da7762 !important;
+    color: white !important;
+    border: 1px solid #da7762 !important;
+    font-weight: bold;
+}
+
+.table-container {
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+table.dataTable.no-footer {
+    border-bottom: 1px solid #da7762 !important;
+    margin-bottom: 20px;
+}
+
